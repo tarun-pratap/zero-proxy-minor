@@ -139,6 +139,9 @@ app.use(express.static('public'));
 
 // API endpoint to receive data from the student page
 app.post('/home/teacher', (req, res) => {
+  res.setHeader('Access-Control-Allow-Origin', 'https://ttt-1-s5l2.onrender.com');
+  res.setHeader('Access-Control-Allow-Methods', 'POST');
+  res.setHeader('Access-Control-Allow-Headers', 'Content-Type');
     const data = req.body;
 
     // Broadcast the received data to all connected clients (teacher page)
