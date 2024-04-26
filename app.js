@@ -13,6 +13,9 @@ const http = require('http');
 const socketIo = require('socket.io');
 app.use(express.json());
 
+const cors = require('cors'); // Add this line
+
+
 // Enable CORS middleware
 app.use(cors({
   origin: 'https://ttt-hkd8.onrender.com',
