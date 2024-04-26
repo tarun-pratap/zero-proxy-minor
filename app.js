@@ -13,6 +13,11 @@ const http = require('http');
 const socketIo = require('socket.io');
 app.use(express.json());
 
+app.use((req, res, next) => {
+    res.setHeader('Access-Control-Allow-Origin', '*');
+    // Other CORS headers like Access-Control-Allow-Headers, Access-Control-Allow-Methods can also be set here if needed.
+    next();
+});
 
 app.get('/home', (req, res)=>{
     res.sendFile(__dirname + '/homePage.html');
