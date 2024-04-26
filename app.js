@@ -14,15 +14,10 @@ const socketIo = require('socket.io');
 app.use(express.json());
 
 // Enable CORS middleware
-app.use((req, res, next) => {
-    res.setHeader('Access-Control-Allow-Origin', '*');
-    res.setHeader('Access-Control-Allow-Methods', 'GET, POST, PUT, PATCH, DELETE');
-    res.setHeader('Access-Control-Allow-Headers', 'Content-Type, Authorization');
-    // Adjust the above headers according to your needs
-
-    // Continue to the next middleware
-    next();
-});
+app.use(cors({
+  origin: 'https://ttt-hkd8.onrender.com',
+  allowedHeaders: ['Content-Type']
+}));
 
 app.get('/home', (req, res)=>{
     res.sendFile(__dirname + '/homePage.html');
