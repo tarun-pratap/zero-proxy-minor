@@ -13,9 +13,14 @@ const http = require('http');
 const socketIo = require('socket.io');
 app.use(express.json());
 
+// Enable CORS middleware
 app.use((req, res, next) => {
     res.setHeader('Access-Control-Allow-Origin', '*');
-    // Other CORS headers like Access-Control-Allow-Headers, Access-Control-Allow-Methods can also be set here if needed.
+    res.setHeader('Access-Control-Allow-Methods', 'GET, POST, PUT, PATCH, DELETE');
+    res.setHeader('Access-Control-Allow-Headers', 'Content-Type, Authorization');
+    // Adjust the above headers according to your needs
+
+    // Continue to the next middleware
     next();
 });
 
