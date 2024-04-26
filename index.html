@@ -1,0 +1,515 @@
+<!-- 
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Geolocation Information</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #2c3e50;
+            color: #fff;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+        }
+        .container {
+            background-color: #34495e;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+            text-align: center;
+        }
+        h1 {
+            margin-bottom: 20px;
+        }
+        label {
+            display: block;
+            margin-bottom: 10px;
+            font-size: 16px;
+        }
+        input[type="number"] {
+            padding: 10px;
+            width: 100%;
+            border-radius: 4px;
+            border: 1px solid #ddd;
+            margin-bottom: 20px;
+            box-sizing: border-box;
+        }
+        #locationData {
+            margin-bottom: 20px;
+        }
+        button {
+            background-color: #3498db;
+            color: #fff;
+            border: none;
+            padding: 10px 20px;
+            cursor: pointer;
+            border-radius: 4px;
+            transition: background-color 0.3s ease;
+        }
+        button:hover {
+            background-color: #2980b9;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Geolocation Information</h1>
+        <label for="enrollmentNumber">Enrollment Number:</label>
+        <input type="number" id="enrollmentNumber">
+        
+        <div id="locationData">
+            <p><strong>Latitude:</strong> <span id="lat"></span></p>
+            <p><strong>Longitude:</strong> <span id="lon"></span></p>
+            <p><strong>Altitude:</strong> <span id="alt"></span> meters</p>
+        </div>
+        <button id="sendLocationButton">Send Location</button>
+    </div>
+
+    <script>
+        var locationObject;
+let en = "";
+        function locationData(position) {
+            var latitude = position.coords.latitude;
+            var longitude = position.coords.longitude;
+            var altitude = position.coords.altitude;
+            var accuracy = position.coords.accuracy;
+            var altitudeAccuracy = position.coords.altitudeAccuracy;
+            var heading = position.coords.heading;
+            var speed = position.coords.speed;
+            var timestamp = position.timestamp;
+
+            document.querySelector('#lat').innerHTML = latitude;
+            document.querySelector('#lon').innerHTML = longitude;
+            document.querySelector('#alt').innerHTML = altitude;
+
+            var enrollmentNumber = document.querySelector('#enrollmentNumber').value;
+            let x2 = latitude;
+         en = document.querySelector('#enrollmentNumber').value;
+            let y2 = longitude;
+            let distance = helper(x1, y1, x2, y2);
+            locationObject = {  
+                latitude: latitude,
+                longitude: longitude,
+                altitude: altitude,
+                accuracy: accuracy,
+                altitudeAccuracy: altitudeAccuracy,
+                heading: heading,
+                speed: speed,
+                timestamp: timestamp,
+                enrollment: enrollmentNumber,
+                dist: distance
+            };
+
+        }
+
+        function error() {
+            alert("Sorry, no position available.");
+        }
+
+        const options = {
+            enableHighAccuracy: true,
+            maximumAge: 30000,
+            timeout: 27000,
+        };
+        function helper(lat1, lon1, lat2, lon2) {
+    const R = 6371; // Radius of the Earth in kilometers
+    
+    // Convert latitude and longitude from degrees to radians
+    const lat1Rad = toRadians(lat1);
+    const lon1Rad = toRadians(lon1);
+    const lat2Rad = toRadians(lat2);
+    const lon2Rad = toRadians(lon2);
+    
+    // Calculate the distance using the formula
+    const distanceKm = Math.acos(
+        Math.sin(lat1Rad) * Math.sin(lat2Rad) +
+        Math.cos(lat1Rad) * Math.cos(lat2Rad) * Math.cos(lon2Rad - lon1Rad)
+    ) * R;
+    
+    // Convert distance from kilometers to meters
+    const distanceMeters = distanceKm * 1000;
+    
+    return distanceMeters;
+}
+
+// Function to convert degrees to radians
+function toRadians(degrees) {
+    return degrees * (Math.PI / 180);
+}
+        const watchID = navigator.geolocation.watchPosition(locationData, error, options);
+        let x1 = 28.5373148;
+        let y1 = 77.3659153;
+
+
+//Doing the GPT changes
+document.getElementById('sendLocationButton').addEventListener('click', async function () {
+    if (locationObject && locationObject.dist <= 6000) {
+        console.log("heyyyyyyyyy");
+        let validity = await startCameraProcessing();
+        console.log("getting validity from camera function ", validity);
+        console.log(typeof (startCameraProcessing()));
+        if (validity == true) {
+            sendLocationToServer(locationObject);
+        } else {
+            console.log("inside the else");
+        }
+    }
+});
+
+async function startCameraProcessing() {
+    let t = 0;
+    console.log("camera is here");
+    try {
+        const response = await fetch('/camera', { method: 'GET' });
+        const data = await response.text();
+        console.log('aake mila: ', typeof (data));
+        const jsonData = JSON.parse(data);
+        console.log((jsonData.face_name[0]));
+        if (jsonData.face_name[0] == en) {
+            t = 1;
+        }
+        if (t == 1) {
+            console.log("returning true by camera function");
+            return true;
+        } else {
+            console.log("returning false by camera function");
+            return false;
+        }
+    } catch (error) {
+        console.error('Error:', error);
+        return false; // or handle error as needed
+    }
+}
+
+function sendLocationToServer(locationObject) {
+    fetch('http://localhost:3000/home/teacher', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(locationObject),
+    })
+        .then(response => response.json())
+        .then(data => console.log('Server response:', data))
+        .catch(error => console.error('Error:', error));
+}
+
+
+    </script>
+</body>
+</html> -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Platypi:ital,wght@0,300..800;1,300..800&display=swap" rel="stylesheet">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title >Geolocation Information</title>
+   <style>
+    body {
+        font-family: Arial, sans-serif;
+        margin: 0;
+        padding: 0;
+        background-image: url('/images/pexels-eva-bronzini-7629493.jpg');
+        background-size: cover;
+        background-position: center;
+        color: #fff;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        height: 100vh;
+    }
+   
+
+.platypi_t {
+  font-family: "Platypi", serif;
+  font-optical-sizing: auto;
+  font-weight: 800;
+  font-style: normal;
+}
+    .container {
+        position: relative;
+        padding: 20px;
+        border-radius: 8px;
+        background: linear-gradient(145deg, rgba(255, 255, 255, 0.2), rgba(0, 0, 0, 0.1));
+        backdrop-filter: blur(8px);
+        box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2), 0 0 0 4px rgba(255, 255, 255, 0.1) inset;
+        /* text-align: center; */
+        color: white;
+        max-width: 80%; /* Adjust max-width for responsiveness */
+        margin: 0 auto; /* Center container */
+    }
+
+    .container::before {
+        content: '';
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        background: inherit;
+        border-radius: inherit;
+        backdrop-filter: blur(16px);
+        z-index: -1;
+    }
+
+    h1 {
+        margin-bottom: 20px;
+    }
+.tt{
+    margin-left: 40px;
+}
+
+
+
+
+    input[type="number"] {
+    padding: 10px;
+    width: auto;
+    border-radius: 0; /* Remove border radius to ensure line effect */
+    border: none; /* Remove default border */
+    border-bottom: 2px solid #043d0ea1; /* Set initial line style */
+    margin-bottom: 20px;
+    box-sizing: border-box;
+    background: transparent;
+    outline: none;
+    transition: border-bottom-color 0.2s, border-bottom-width 0.3s; /* Transition for border changes */
+    border-bottom-width: 2px;
+}
+
+input[type="number"]:hover {
+    border-bottom-color: #0fa30cde; /* Highlight the line color on hover */
+  /* Increase the width of the line on hover */
+}
+
+
+
+    #locationData {
+        margin-bottom: 20px;
+    }
+    button {
+    background-color: transparent;
+    color: #fff;
+    border: 2px solid rgba(255, 255, 255, 0.5); /* Transparent border */
+    padding: 10px 20px;
+    cursor: pointer;
+    border-radius: 8px;
+    transition: background-color 0.5s ease, border-color 0.5s ease, color 0.5s ease;
+    position: relative;
+    overflow: hidden;
+    margin-left: 9rem;
+}
+
+button::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(255, 255, 255, 0.1);
+    transition: opacity 0.5s ease;
+    z-index: -1;
+}
+
+button:hover::before {
+    opacity: 0; /* Hide the background overlay on hover */
+}
+
+button span {
+    position: relative;
+    z-index: 1;
+}
+
+button:hover {
+    border-color: #81d817; /* Highlight the border color on hover */
+    color: #06087782; 
+}
+.photo{
+    z-index: 100;
+    width: 80px;
+    height: 80px;
+    color: white;
+}
+
+
+
+    /* Media Query for Phone View */
+    @media screen and (max-width: 480px) {
+        .container {
+            padding: 10px;
+        }
+        input[type="number"] {
+            padding: 8px;
+        }
+    }
+</style>
+
+</head>
+<body>
+    <div class="container">
+        <h1 class="platypi_t">Geolocation Information</h1>
+       <span class="tt">Enrollment Number:</span><input type="number" id="enrollmentNumber">
+
+        <div id="locationData"  class="location-info">
+            <!-- <img src="/svg.png" class="photo" alt=""> -->
+            <p><strong>Latitude   :</strong> &nbsp;&nbsp;&nbsp;&nbsp; <span id="lat"></span></p>
+            <p><strong>Longitude:</strong>&nbsp;&nbsp; <span id="lon"></span></p>
+            <p><strong>Altitude   :</strong>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <span id="alt"></span> meters</p>
+        </div>
+
+        <button id="sendLocationButton"><strong>Send Location</strong></button>
+    </div>
+
+    <script>
+        var locationObject;
+let en = "";
+        function locationData(position) {
+            var latitude = position.coords.latitude;
+            var longitude = position.coords.longitude;
+            var altitude = position.coords.altitude;
+            var accuracy = position.coords.accuracy;
+            var altitudeAccuracy = position.coords.altitudeAccuracy;
+            var heading = position.coords.heading;
+            var speed = position.coords.speed;
+            var timestamp = position.timestamp;
+
+            document.querySelector('#lat').innerHTML = latitude;
+            document.querySelector('#lon').innerHTML = longitude;
+            document.querySelector('#alt').innerHTML = altitude;
+
+            var enrollmentNumber = document.querySelector('#enrollmentNumber').value;
+            let x2 = latitude;
+         en = document.querySelector('#enrollmentNumber').value;
+            let y2 = longitude;
+            let distance = helper(x1, y1, x2, y2);
+            locationObject = {  
+                latitude: latitude,
+                longitude: longitude,
+                altitude: altitude,
+                accuracy: accuracy,
+                altitudeAccuracy: altitudeAccuracy,
+                heading: heading,
+                speed: speed,
+                timestamp: timestamp,
+                enrollment: enrollmentNumber,
+                dist: distance
+            };
+
+        }
+
+        function error() {
+            alert("Sorry, no position available.");
+        }
+
+        const options = {
+            enableHighAccuracy: true,
+            maximumAge: 30000,
+            timeout: 27000,
+        };
+        function helper(lat1, lon1, lat2, lon2) {
+    const R = 6371; // Radius of the Earth in kilometers
+    
+    // Convert latitude and longitude from degrees to radians
+    const lat1Rad = toRadians(lat1);
+    const lon1Rad = toRadians(lon1);
+    const lat2Rad = toRadians(lat2);
+    const lon2Rad = toRadians(lon2);
+    
+    // Calculate the distance using the formula
+    const distanceKm = Math.acos(
+        Math.sin(lat1Rad) * Math.sin(lat2Rad) +
+        Math.cos(lat1Rad) * Math.cos(lat2Rad) * Math.cos(lon2Rad - lon1Rad)
+    ) * R;
+    
+    // Convert distance from kilometers to meters
+    const distanceMeters = distanceKm * 1000;
+    
+    return distanceMeters;
+}
+
+// Function to convert degrees to radians
+function toRadians(degrees) {
+    return degrees * (Math.PI / 180);
+}
+        const watchID = navigator.geolocation.watchPosition(locationData, error, options);
+        
+        //college ke coordinates idhar daalne hai
+        let x1 = 28.5374287;
+        let y1 = 77.3662191;
+
+
+//Doing the GPT changes
+document.getElementById('sendLocationButton').addEventListener('click', async function () {
+    if (locationObject && locationObject.dist <= 2) {
+        // console.log("heyyyyyyyyy");
+        // let validity = await startCameraProcessing();
+        // console.log("getting validity from camera function ", validity);
+        // console.log(typeof (startCameraProcessing()));
+        // if (validity == true) {
+            console.log("hiiii", locationObject.enrollment.toString().length);
+            if(locationObject.enrollment.toString().length== 10){
+            sendLocationToServer(locationObject);
+            }
+        // } else {
+                                    //   console.log("Your face does not match");
+        // }
+    }
+    else {
+        console.log("hiiii", locationObject.enrollment.toString().length);
+        if(locationObject.enrollment.toString().length == 10){
+            sendLocationToServer(locationObject);
+        console.log(locationObject.dist);
+        console.log('you are outside the class')
+        }      
+    }
+});
+
+async function startCameraProcessing() {
+    let t = 0;
+    console.log("camera is here");
+    try {
+        const response = await fetch('/camera', { method: 'GET' });
+        const data = await response.text();
+        console.log('aake mila: ', typeof (data));
+        const jsonData = JSON.parse(data);
+        console.log((jsonData.face_name[0]));
+        if (jsonData.face_name[0] == en) {
+            t = 1;
+        }
+        if (t == 1) {
+            console.log("returning true by camera function");
+            return true;
+        } else {
+            console.log("returning false by camera function");
+            return false;
+        }
+    } catch (error) {
+        console.error('Error:', error);
+        return false; // or handle error as needed
+    }
+}
+
+function sendLocationToServer(locationObject) {
+    fetch('http://localhost:3000/home/teacher', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(locationObject),
+    })
+        .then(response => response.json())
+        .then(data => console.log('Server response:', data))
+        .catch(error => console.error('Error:', error));
+}
+    </script>
+</body>
+</html>

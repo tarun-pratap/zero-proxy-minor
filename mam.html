@@ -1,0 +1,326 @@
+<!-- <!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Teacher's Portal</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #2c3e50; /* Cool background color */
+            color: #fff; /* Text color */
+        }
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 20px;
+            background-color: #34495e; /* Container background color */
+            border-radius: 8px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+        h1 {
+            text-align: center;
+            margin-bottom: 20px;
+        }
+        button {
+            background-color: #3498db; 
+            color: #fff;
+            border: none;
+            padding: 10px 20px;
+            cursor: pointer;
+            border-radius: 4px;
+            transition: background-color 0.3s ease; 
+        }
+        button:hover {
+            background-color: #2980b9;
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 20px;
+        }
+        th, td {
+            border: 1px solid #ddd;
+            padding: 8px;
+            text-align: left;
+        }
+        th {
+            background-color: #000000;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Teacher's Portal</h1>
+        <button id="sendLocationButton">Generate Random Number</button>
+        <p id="random-number"></p>
+        <div id="dataDisplay"></div>
+        <table id="data-table">
+            <thead>
+                <tr>
+                    <th>Enrollment Number</th>
+                    <th>Altitude</th>
+                </tr>
+            </thead>
+            <tbody id="table-body">
+            </tbody>
+        </table>
+    </div>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/4.3.1/socket.io.js"></script>
+    <script>
+        const socket = io();
+
+        socket.on('connect', () => {
+            console.log('Connected to server');
+        });
+
+        socket.on('dataUpdate', (data) => {
+            console.log(data);
+            displayData(data);
+        });
+
+        function displayData(data) {
+            const tableBody = document.getElementById('table-body');
+
+            function isValidEnrollment(enrollment) {
+                return /^\d{10}$/.test(enrollment);
+            }
+            if (isValidEnrollment(data.enrollment) && (data.dist <= 6000)) {
+                const existingEnrollments = Array.from(tableBody.querySelectorAll('tr td:first-child')).map(cell => cell.textContent);
+                if (!existingEnrollments.includes(data.enrollment)) {
+                    const newRow = document.createElement('tr');
+                    const enrollmentCell = document.createElement('td');
+                    enrollmentCell.textContent = data.enrollment;
+                    newRow.appendChild(enrollmentCell);
+
+                    const altitudeCell = document.createElement('td');
+                    altitudeCell.textContent = data.altitude;
+                    newRow.appendChild(altitudeCell);
+                    tableBody.appendChild(newRow);
+                }
+            }
+    
+        }
+
+        function sendRandomNumberToBackend(randomNumber) {
+            fetch('/api/random', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({ randomNumber }),
+            })
+            .then(response => {
+                if (!response.ok) {
+                    throw new Error('Failed to send random number to the backend');
+                }
+                return response.json();
+            })
+            .then(data => {
+                console.log('Response from backend:', data);
+            })
+            .catch(error => {
+                console.error('Error:', error);
+            });
+        }
+
+        document.getElementById('sendLocationButton').addEventListener('click', function () {
+            generateAndSendRandomNumber();
+        });
+
+        function generateAndSendRandomNumber() {
+            const randomNumber = Math.floor(Math.random() * 1000);
+            document.getElementById('random-number').innerText = `Random Number: ${randomNumber}`;
+            sendRandomNumberToBackend(randomNumber);
+        }
+    </script>
+</body>
+</html>
+ -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Anta&display=swap" rel="stylesheet">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Teacher's Portal</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            color: #fff; /* Text color */
+            background-image: url('/images/pexels-eva-bronzini-7629493.jpg'); 
+            background-size: cover;
+            background-position: center;
+            
+        }
+        .container {
+    max-width: 800px;
+    margin: 0 auto;
+    padding: 20px;
+    background-color: rgba(255, 255, 255, 0.1); /* Glass effect background color */
+    border-radius: 8px;
+        background: linear-gradient(145deg, rgba(255, 255, 255, 0.2), rgba(0, 0, 0, 0.1));
+        backdrop-filter: blur(8px);
+        box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2), 0 0 0 4px rgba(255, 255, 255, 0.1) inset; /* Box shadow for depth */
+}
+.container::before {
+        content: '';
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        background: inherit;
+        border-radius: inherit;
+        backdrop-filter: blur(16px);
+        z-index: -1;
+    }
+        h1 {
+            text-align: center;
+            margin-bottom: 20px;
+        }
+        .anta-regular {
+  font-family: "Anta", sans-serif;
+  font-weight: 400;
+  font-style: normal;
+}
+button {
+    background-color: transparent;
+    color: #fff;
+    border: 2px solid #fff; /* White rounded border */
+    padding: 10px 20px;
+    cursor: pointer;
+    border-radius: 25px; /* Adjust border-radius to make it more rounded */
+    transition: background-color 0.3s ease, border-color 0.3s ease; /* Add border-color transition */
+    font-size: 16px; /* Adjust font size as needed */
+}
+
+button:hover {
+    background-color: rgba(255, 255, 255, 0.3); /* Semi-transparent white background on hover */
+    border-color: #2980b9; /* Change border color on hover */
+}
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 20px;
+        }
+        th, td {
+            border: 1px solid #ddd;
+            padding: 8px;
+            text-align: left;
+        }
+        th {
+            background-color: #000000;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1 class="anta-regular">Teacher's Portal</h1>
+        <button id="sendLocationButton">Generate Random Number</button>
+        <p id="random-number"></p>
+        <div id="dataDisplay"></div>
+        <table id="data-table">
+            <thead>
+                <tr>
+                    <th>Enrollment Number</th>
+                    <th>Attendance</th>
+                </tr>
+            </thead>
+            <tbody id="table-body">
+            </tbody>
+        </table>
+    </div>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/4.3.1/socket.io.js"></script>
+    <script>
+        const socket = io();
+
+        socket.on('connect', () => {
+            console.log('Connected to server');
+        });
+
+        socket.on('dataUpdate', (data) => {
+            console.log(data);
+            displayData(data);
+        });
+
+        function displayData(data) {
+            const tableBody = document.getElementById('table-body');
+
+            function isValidEnrollment(enrollment) {
+                return /^\d{10}$/.test(enrollment);
+            }
+            if (isValidEnrollment(data.enrollment) && (data.dist <= 6000)) {
+                const existingEnrollments = Array.from(tableBody.querySelectorAll('tr td:first-child')).map(cell => cell.textContent);
+                if (!existingEnrollments.includes(data.enrollment)) {
+                    // console.log("hi", data.enrollment);
+                    const newRow = document.createElement('tr');
+                    const enrollmentCell = document.createElement('td');
+                    enrollmentCell.textContent = data.enrollment;
+                    newRow.appendChild(enrollmentCell);
+
+                    const attendanceCell = document.createElement('td');
+        
+                    attendanceCell.textContent = "Present";
+                    attendanceCell.style.color = "green";
+                    newRow.appendChild(attendanceCell);
+                    tableBody.appendChild(newRow);
+
+                }
+            }
+            else{
+                const newRow = document.createElement('tr');
+                    const enrollmentCell = document.createElement('td');
+                    enrollmentCell.textContent = data.enrollment;
+                    newRow.appendChild(enrollmentCell);
+
+                    const attendanceCell = document.createElement('td');
+        
+                    attendanceCell.textContent = "Absent";
+                    attendanceCell.style.color = "red";
+                    newRow.appendChild(attendanceCell);
+                    tableBody.appendChild(newRow);
+            }
+    
+        }
+
+        function sendRandomNumberToBackend(randomNumber) {
+            fetch('/api/random', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({ randomNumber }),
+            })
+            .then(response => {
+                if (!response.ok) {
+                    throw new Error('Failed to send random number to the backend');
+                }
+                return response.json();
+            })
+            .then(data => {
+                console.log('Response from backend:', data);
+            })
+            .catch(error => {
+                console.error('Error:', error);
+            });
+        }
+
+        document.getElementById('sendLocationButton').addEventListener('click', function () {
+            generateAndSendRandomNumber();
+        });
+
+        function generateAndSendRandomNumber() {
+    const randomNumber = Math.floor(Math.random() * 900) + 100; // Generates a random number between 100 and 999
+    document.getElementById('random-number').innerText = `Random Number: ${randomNumber}`;
+    sendRandomNumberToBackend(randomNumber);
+}
+    </script>
+</body>
+</html>

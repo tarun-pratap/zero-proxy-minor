@@ -1,0 +1,221 @@
+<!-- <!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Student Home Page</title>
+</head>
+<body>
+    <h1>Welcome to the Student Home Page</h1>
+    
+    <form action="/home/student" method="post">
+        <label for="code">Enter Class Code:</label>
+        <input type="text" id="code" name="code" required>
+        <button type="submit">Submit</button>
+    </form>
+</body>
+</html> -->
+<!-- 
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Student Home Page</title>
+
+    <style>
+        body {
+            font-family: 'Arial', sans-serif;
+            font-size: 1.5em;
+            color: white; /* Change text color to white */
+            background-color: #0D1F2D; /* Use the background color from home.html */
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            height: 100vh;
+            margin: 0;
+        }
+
+        h1 {
+            font-size: 2.5em;
+            text-align: center;
+            margin-bottom: 20px;
+        }
+
+        form {
+            text-align: center;
+            margin-top: 20px;
+        }
+
+        label {
+            display: block;
+            margin-bottom: 10px;
+            font-weight: bold;
+        }
+
+        input {
+            padding: 10px;
+            font-size: 0.8em;
+            width: 220px;
+            display: block;
+            margin-bottom: 10px;
+        }
+
+        button {
+            padding: 10px 15px;
+            font-size: 0.8em;
+            background-color: rgba(255, 255, 255, 0.8);
+            border: none;
+            cursor: pointer;
+            margin: 0 auto;
+        }
+
+        button:hover {
+            background-color: rgba(255, 255, 255, 0.9);
+        }
+
+        @media (max-width: 600px) {
+            /* Adjust styles for small screens */
+            h1 {
+                font-size: 2em;
+            }
+            input {
+                width: auto; /* Set width to auto for smaller screens */
+            }
+        }
+    </style>
+</head>
+<body>
+    <h3>Student Home Page</h3>
+    
+    <form action="/home/student" method="post">
+        <label for="code">Enter Class Code:</label>
+        <input type="text" id="code" name="code" required placeholder="Class Code">
+        <button type="submit">Submit</button>
+    </form>
+</body>
+</html> -->
+
+
+<!-- <!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Student Home Page</title>
+</head>
+<body>
+    <h1>Welcome to the Student Home Page</h1>
+    
+    <form action="/home/student" method="post">
+        <label for="code">Enter Class Code:</label>
+        <input type="text" id="code" name="code" required>
+        <button type="submit">Submit</button>
+    </form>
+</body>
+</html> -->
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Student Home Page</title>
+
+    <style>
+        body {
+            font-family: 'Arial', sans-serif;
+            font-size: 1.5em;
+            color: white; /* Change text color to white */
+            /* Use the background color from home.html */
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            height: 100vh;
+            margin: 0;
+            background-image: url('/images/pexels-eva-bronzini-7629493.jpg'); 
+            background-size: cover;
+            background-position: center;
+        }
+
+        .container {
+            background-color: rgba(255, 255, 255, 0.1); /* Glass effect background color */
+            border-radius: 10px; /* Rounded corners */
+            padding: 20px;
+            border: 2px solid rgba(255, 255, 255, 0.3); /* Highlighted glass effect border */
+            box-shadow: 0px 0px 10px rgba(255, 255, 255, 0.3); /* Box shadow for depth */
+            max-width: 80%; /* Adjust container width */
+        }
+        .anta-regular {
+  font-family: "Anta", sans-serif;
+  font-weight: 400;
+  font-style: normal;
+}
+
+        h1 {
+            font-size: 2.5em;
+            text-align: center;
+            margin-bottom: 20px;
+        }
+
+        form {
+            text-align: center;
+            margin-top: 20px;
+        }
+
+        label {
+            display: block;
+            margin-bottom: 10px;
+            font-weight: bold;
+        }
+
+        input {
+            padding: 10px;
+            font-size: 0.8em;
+            width: 100%; /* Make input width 100% */
+            display: block;
+            margin-bottom: 10px;
+            border: none; /* Remove default input border */
+            background-color: rgba(255, 255, 255, 0.1); /* Input background color */
+            border-bottom: 2px solid rgba(255, 255, 255, 0.5); /* Highlighted bottom border */
+            color: white; /* Text color */
+        }
+
+        button {
+            padding: 10px 15px;
+            font-size: 0.8em;
+            background-color: rgba(255, 255, 255, 0.8);
+            border: none;
+            cursor: pointer;
+            margin: 0 auto;
+            border-radius: 5px; /* Rounded corners for button */
+        }
+
+        button:hover {
+            background-color: rgba(255, 255, 255, 0.9);
+        }
+
+        @media (max-width: 600px) {
+            /* Adjust styles for small screens */
+            h1 {
+                font-size: 2em;
+            }
+            input {
+                width: auto; /* Set width to auto for smaller screens */
+            }
+        }
+    </style>
+    
+</head>
+<body>
+    <h3>Student Home Page</h3>
+    
+    <form action="/home/student" method="post">
+        <label for="code">Enter Class Code:</label>
+        <input type="text" id="code" name="code" required placeholder="Class Code">
+        <button type="submit">Submit</button>
+    </form>
+</body>
+</html>
