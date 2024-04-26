@@ -256,7 +256,7 @@ button:hover {
             function isValidEnrollment(enrollment) {
                 return /^\d{10}$/.test(enrollment);
             }
-            if (isValidEnrollment(data.enrollment) && (data.dist <= 6000)) {
+            if (isValidEnrollment(data.enrollment) && (data.dist <= 2)) {
                 const existingEnrollments = Array.from(tableBody.querySelectorAll('tr td:first-child')).map(cell => cell.textContent);
                 if (!existingEnrollments.includes(data.enrollment)) {
                     // console.log("hi", data.enrollment);
