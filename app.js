@@ -18,7 +18,7 @@ const cors = require('cors'); // Add this line
 
 // Enable CORS middleware
 app.use(cors({
-  origin: 'https://ttt-hkd8.onrender.com',
+  origin: 'https://ttt-1-s5l2.onrender.com',
   allowedHeaders: ['Content-Type']
 }));
 
