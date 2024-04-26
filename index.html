@@ -499,7 +499,7 @@ async function startCameraProcessing() {
 }
 
 function sendLocationToServer(locationObject) {
-    fetch('http://localhost:3000/home/teacher', {
+    fetch('/home/teacher', {
         method: 'POST',
         headers: {
             'Content-Type': 'application/json',
