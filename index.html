@@ -443,12 +443,12 @@ function toRadians(degrees) {
         const watchID = navigator.geolocation.watchPosition(locationData, error, options);
         
         //college ke coordinates idhar daalne hai
-        let x1 = 28.5190979;
-        let y1 = 77.3653959;
+        let x1 = 28.5189719;
+        let y1 = 77.3651959;
 
 //Doing the GPT changes
 document.getElementById('sendLocationButton').addEventListener('click', async function () {
-    if (locationObject && locationObject.dist <= 2) {
+    if (locationObject && locationObject.dist <= 25) {
         // console.log("heyyyyyyyyy");
         // let validity = await startCameraProcessing();
         // console.log("getting validity from camera function ", validity);
