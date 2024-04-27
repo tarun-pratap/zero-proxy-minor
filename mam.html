@@ -389,19 +389,19 @@ button:hover {
  
                  }
              }
-            //  else{
-            //      const newRow = document.createElement('tr');
-            //          const enrollmentCell = document.createElement('td');
-            //          enrollmentCell.textContent = data.enrollment;
-            //          newRow.appendChild(enrollmentCell);
+             else{
+                 const newRow = document.createElement('tr');
+                     const enrollmentCell = document.createElement('td');
+                     enrollmentCell.textContent = data.enrollment;
+                     newRow.appendChild(enrollmentCell);
  
-            //          const attendanceCell = document.createElement('td');
+                     const attendanceCell = document.createElement('td');
          
-            //          attendanceCell.textContent = "Absent";
-            //          attendanceCell.style.color = "red";
-            //          newRow.appendChild(attendanceCell);
-            //          tableBody.appendChild(newRow);
-            //  }
+                     attendanceCell.textContent = "Absent";
+                     attendanceCell.style.color = "red";
+                     newRow.appendChild(attendanceCell);
+                     tableBody.appendChild(newRow);
+             }
      
          }
          document.getElementById("addRowButton").addEventListener("click", function() {
